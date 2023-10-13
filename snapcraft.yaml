@@ -269,7 +269,7 @@ parts:
       done
 
   command-chain:
-    source: https://github.com/snapcore/snapcraft-desktop-integration.git
+    source: https://github.com/ZoopOTheGoop/snapcraft-desktop-integration.git
     source-type: git
     source-subdir: gnome
     plugin: make
