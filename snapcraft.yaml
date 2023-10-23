@@ -213,6 +213,7 @@ parts:
       - libxrender1
       - libxtst6
       - locales-all
+      - mesa-utils # for detecting nvidia on wayland
       - python3-dbus
       - python3-gi
       - python3.10-minimal
