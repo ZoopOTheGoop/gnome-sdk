@@ -17,7 +17,6 @@ description: |
   * You can report issues with this content snap on GitHub: https://github.com/ubuntu/gnome-sdk/issues
   * The source code of this snap is available on GitHub in the `gnome-42-2204` branch: https://github.com/ubuntu/gnome-sdk/tree/gnome-42-2204
 contact: https://github.com/ubuntu/gnome-sdk/issues
-
 confinement: strict
 grade: stable
 icon: icon.png
@@ -26,15 +25,15 @@ compression: lzo
 
 # the recommended mountpoint for that content is /gnome-platform
 slots:
-    gnome-42-2204:
-      interface: content
-      read:
-        - /
+  gnome-42-2204:
+    interface: content
+    read:
+      - /
 
 parts:
   gnome-sdk:
     plugin: nil
-    stage-snaps: [ gnome-42-2204-sdk/latest/stable ]
+    stage-snaps: [gnome-42-2204-sdk/latest/stable]
     stage:
       - lib/*/bindtextdomain.so
       - usr
@@ -124,7 +123,7 @@ parts:
       - -usr/share/devhelp/books
 
   debs:
-    after: [ gnome-sdk ]
+    after: [gnome-sdk]
     plugin: nil
     stage-packages:
       - fcitx-frontend-gtk3
@@ -224,8 +223,8 @@ parts:
       # VA-API drivers for HW-accelerated video decoding
       - mesa-va-drivers
       - on amd64:
-        - i965-va-driver
-        - intel-media-va-driver
+          - i965-va-driver
+          - intel-media-va-driver
     stage:
       - -usr/lib/$CRAFT_ARCH_TRIPLET/libLLVM*
     override-build: |
@@ -242,15 +241,66 @@ parts:
       find . -type f,l -name "*.so*" -exec bash -c "rm -f $CRAFT_PART_INSTALL/usr/lib/{}*" \;
 
   fonts-config:
-      after: [ debs ]
-      plugin: nil
-      stage-packages: [ fontconfig-config, fonts-arphic-ukai, fonts-arphic-uming, fonts-beng-extra, fonts-dejavu-core, fonts-deva-extra, fonts-droid-fallback, fonts-gubbi, fonts-gujr-extra, fonts-guru-extra, fonts-lohit-beng-assamese, fonts-lohit-beng-bengali, fonts-lohit-deva, fonts-lohit-gujr, fonts-lohit-guru, fonts-lohit-knda, fonts-lohit-mlym, fonts-lohit-orya, fonts-lohit-taml, fonts-lohit-taml-classical, fonts-lohit-telu, fonts-noto-cjk, fonts-noto-mono, fonts-orya-extra, fonts-pagul, fonts-smc-anjalioldlipi, fonts-smc-chilanka, fonts-smc-dyuthi, fonts-smc-karumbi, fonts-smc-keraleeyam, fonts-smc-manjari, fonts-smc-meera, fonts-smc-rachana, fonts-smc-raghumalayalamsans, fonts-smc-suruma, fonts-smc-uroob, fonts-telu-extra, fonts-tlwg-garuda, fonts-tlwg-kinnari, fonts-tlwg-laksaman, fonts-tlwg-loma, fonts-tlwg-mono, fonts-tlwg-norasi, fonts-tlwg-typist, fonts-tlwg-typo, fonts-tlwg-umpush, fonts-tlwg-waree, fonts-urw-base35, language-selector-common ]
-      stage:
+    after: [debs]
+    plugin: nil
+    stage-packages:
+      [
+        fontconfig-config,
+        fonts-arphic-ukai,
+        fonts-arphic-uming,
+        fonts-beng-extra,
+        fonts-dejavu-core,
+        fonts-deva-extra,
+        fonts-droid-fallback,
+        fonts-gubbi,
+        fonts-gujr-extra,
+        fonts-guru-extra,
+        fonts-lohit-beng-assamese,
+        fonts-lohit-beng-bengali,
+        fonts-lohit-deva,
+        fonts-lohit-gujr,
+        fonts-lohit-guru,
+        fonts-lohit-knda,
+        fonts-lohit-mlym,
+        fonts-lohit-orya,
+        fonts-lohit-taml,
+        fonts-lohit-taml-classical,
+        fonts-lohit-telu,
+        fonts-noto-cjk,
+        fonts-noto-mono,
+        fonts-orya-extra,
+        fonts-pagul,
+        fonts-smc-anjalioldlipi,
+        fonts-smc-chilanka,
+        fonts-smc-dyuthi,
+        fonts-smc-karumbi,
+        fonts-smc-keraleeyam,
+        fonts-smc-manjari,
+        fonts-smc-meera,
+        fonts-smc-rachana,
+        fonts-smc-raghumalayalamsans,
+        fonts-smc-suruma,
+        fonts-smc-uroob,
+        fonts-telu-extra,
+        fonts-tlwg-garuda,
+        fonts-tlwg-kinnari,
+        fonts-tlwg-laksaman,
+        fonts-tlwg-loma,
+        fonts-tlwg-mono,
+        fonts-tlwg-norasi,
+        fonts-tlwg-typist,
+        fonts-tlwg-typo,
+        fonts-tlwg-umpush,
+        fonts-tlwg-waree,
+        fonts-urw-base35,
+        language-selector-common,
+      ]
+    stage:
       - etc/fonts
       - usr/share/fontconfig
 
   caches:
-    after: [ fonts-config ]
+    after: [fonts-config]
     plugin: nil
     build-packages:
       - gtk-update-icon-cache
@@ -276,9 +326,13 @@ parts:
     plugin: make
     make-parameters:
       - PLATFORM_PLUG=$SNAPCRAFT_PROJECT_NAME
+    build-packages:
+      - libx11-dev
+      - libglx-dev
+      - libglu1-mesa-dev
 
   cleanup:
-    after: [ caches ]
+    after: [caches]
     plugin: nil
     build-snaps:
       - gtk-common-themes
